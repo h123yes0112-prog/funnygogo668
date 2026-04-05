@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>【愚公移山】童趣挑戰</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 登錄層：拍照與輸入姓名 -->
+        <div id="login-layer" class="layer active">
+            <h1 class="yugong-title">【愚公移山】</h1>
+            <p class="subtitle">拍下大頭照，化身移山小神童！</p>
+            
+            <div class="camera-container">
+                <video id="camera-feed" autoplay playsinline></video>
+                <img id="photo-preview" style="display: none;" alt="Preview" />
+                <canvas id="photo-canvas" style="display: none;"></canvas>
+            </div>
+            
+            <div class="btn-group">
+                <button id="capture-btn" class="cute-btn primary">📸 拍下大頭照</button>
+                <button id="retake-btn" class="cute-btn secondary" style="display: none;">🔄 重拍</button>
+            </div>
+
+            <input type="text" id="name-input" placeholder="輸入充滿力量的姓名..." required autocomplete="off">
+            
+            <button id="join-btn" class="cute-btn action" disabled>準備舉起大槌！</button>
+        </div>
+
+        <!-- 等待層 -->
+        <div id="waiting-layer" class="layer">
+            <div class="mountain-loader">⛰️</div>
+            <h2 id="waiting-text" class="glow-text">等待移山機會...</h2>
+            <p class="blink">請準備好！在實體機台上用力拍下大按鈕！</p>
+        </div>
+
+        <!-- 結算層 -->
+        <div id="result-layer" class="layer">
+            <div class="result-photo-box">
+                <img id="result-photo" src="" alt="您的大頭照" />
+            </div>
+            <h3 class="result-title">你是傳說中的...</h3>
+            <div id="rank-display" class="rank-tag cute">[分析中]</div>
+            <div class="time-label">倒數剩餘</div>
+            <div id="time-display" class="time-score">0.00</div>
+            
+            <button id="restart-btn" class="cute-btn secondary" style="margin-top:20px;">再次移山 🔄</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

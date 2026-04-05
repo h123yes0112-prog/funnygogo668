@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+:root {
+    --bg-color: #e0f7fa; /* 明亮天空藍 */
+    --primary: #4caf50;   /* 草地綠 */
+    --secondary: #ff9800; /* 大地橘 */
+    --accent: #ff5722;    /* 活潑紅橘 */
+    --text-main: #37474f; /* 深色字體 */
+    --text-muted: #546e7a;
+    --card-bg: #ffffff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Kosugi Maru', 'Noto Sans TC', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    /* 童趣高山背景 */
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(139, 195, 74, 0.15) 0%, transparent 50%);
+}
+
+.layer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 440px;
+    padding: 40px 30px;
+    text-align: center;
+    background: var(--card-bg);
+    border: 4px solid var(--primary);
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 10px 0px rgba(76, 175, 80, 0.4);
+    animation: popInBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    position: relative;
+}
+
+.layer.active { 
+    display: flex; 
+}
+
+.yugong-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 5px;
+    text-shadow: 3px 3px 0px #ffe0b2;
+    letter-spacing: 2px;
+}
+
+.subtitle { 
+    color: var(--text-muted); 
+    font-size: 1.1rem; 
+    margin-bottom: 25px; 
+    font-weight: 700;
+}
+
+/* 拍照區塊 */
+.camera-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 6px solid var(--secondary);
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    background: #eee;
+    position: relative;
+}
+
+#camera-feed, #photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* 水平翻轉前鏡頭畫面 */
+#camera-feed {
+    transform: scaleX(-1);
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.cute-btn {
+    padding: 12px 25px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    box-shadow: 0 4px 0px rgba(0,0,0,0.2);
+}
+.cute-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0px rgba(0,0,0,0.2);
+}
+.cute-btn.primary { background: var(--secondary); color: white; }
+.cute-btn.secondary { background: #e0e0e0; color: #333; }
+.cute-btn.action { 
+    width: 100%; 
+    padding: 18px; 
+    font-size: 1.3rem; 
+    background: var(--primary); 
+    color: white; 
+    border-radius: 12px;
+    box-shadow: 0 6px 0px #2e7d32;
+    margin-top: 10px;
+}
+.cute-btn.action:disabled {
+    background: #ccc;
+    box-shadow: 0 6px 0px #999;
+    cursor: not-allowed;
+    transform: none;
+}
+.cute-btn.action:active:not(:disabled) {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0px #2e7d32;
+}
+
+input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #f5f5f5;
+    border: 3px solid #e0e0e0;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1.2rem;
+    outline: none;
+    margin-bottom: 15px;
+    border-radius: 16px;
+    transition: border-color 0.3s;
+    text-align: center;
+    font-weight: 700;
+}
+input:focus {
+    border-color: var(--secondary);
+    background: #fff3e0;
+}
+
+/* Loader */
+.mountain-loader {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: jump 1s ease-in-out infinite;
+}
+
+.glow-text { 
+    color: var(--accent); 
+    text-shadow: 2px 2px 0px #ffe0b2;
+    margin: 0 0 15px 0; 
+    font-size: 2rem; 
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.blink { 
+    animation: pulseText 1.5s ease-in-out infinite; 
+    color: var(--text-main); 
+    font-weight: 700;
+    background: #fff9c4;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+/* 結算分數特效 */
+.result-photo-box {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    border: 5px solid var(--accent);
+    overflow: hidden;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.result-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+.result-title {
+    color: var(--text-muted); 
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.time-label {
+    background: #e1bee7;
+    color: #6a1b9a;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.time-score {
+    font-size: 5rem;
+    color: var(--primary);
+    text-shadow: 3px 3px 0px #c8e6c9;
+    font-weight: 900;
+    margin: 5px 0 20px 0;
+    line-height: 1;
+}
+
+.rank-tag.cute {
+    font-size: 2.5rem;
+    font-weight: 900;
+    display: inline-block;
+    padding: 15px 35px;
+    background: #ccc;
+    color: white;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 0px #999;
+    letter-spacing: 2px;
+}
+
+/* 愚公移山段位色彩 */
+.rank-slow { background: #795548; box-shadow: 0 8px 0px #4e342e; } /* 慢慢搬 (咖啡土) */
+.rank-fast { background: #ff9800; box-shadow: 0 8px 0px #e65100; } /* 大力士 (橘色力量) */
+.rank-god { background: #e91e63; box-shadow: 0 8px 0px #ad1457; animation: shake 0.5s ease-in-out; } /* 移山神童 (粉紅傳奇) */
+
+@keyframes popInBounce { 
+    0% { opacity: 0; transform: scale(0.8) translateY(30px); } 
+    100% { opacity: 1; transform: scale(1) translateY(0); } 
+}
+@keyframes pulseText { 
+    0%, 100% { transform: scale(1); opacity: 0.8;} 
+    50% { transform: scale(1.05); opacity: 1; } 
+}
+@keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+@keyframes shake {
+    0% { transform: translate(2px, 2px) rotate(0deg); }
+    20% { transform: translate(-2px, -2px) rotate(-5deg); }
+    40% { transform: translate(-3px, 0px) rotate(5deg); }
+    60% { transform: translate(3px, 2px) rotate(0deg); }
+    80% { transform: translate(1px, -1px) rotate(5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* ================================= */
+/* 大螢幕 TV Dashboard 童趣版樣式    */
+/* ================================= */
+.tv-body {
+    align-items: flex-start;
+    padding: 40px;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 20%),
+        radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.6) 0%, transparent 15%);
+}
+.tv-container {
+    width: 100%;
+    max-width: 1800px;
+    height: 90vh;
+    display: flex;
+    gap: 40px;
+    margin: 0 auto;
+}
+.tv-main {
+    flex: 2;
+    background: rgba(255, 255, 255, 0.9);
+    border: 8px solid var(--primary);
+    border-radius: 40px;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 0px rgba(76, 175, 80, 0.5), 0 30px 40px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+.tv-sidebar {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.9);
+    border: 8px solid var(--secondary);
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 0 20px 0px rgba(255, 152, 0, 0.5), 0 30px 40px rgba(0,0,0,0.1);
+}
+.tv-highlight-name {
+    font-size: 3.5rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+.tv-big-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 10px solid var(--accent);
+    object-fit: cover;
+    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.leaderboard-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    background: #f1f8e9;
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 4px solid #c5e1a5;
+    font-size: 1.8rem;
+    color: var(--text-main);
+    transition: transform 0.3s;
+    font-weight: bold;
+}
+.leaderboard-item:hover { transform: scale(1.02); }
+.lb-rank {
+    font-size: 2.2rem;
+    margin-right: 15px;
+    background: #ccc;
+    color: white;
+    width: 50px; height: 50px;
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+}
+.lb-photo {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.lb-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-time {
+    color: var(--accent);
+    font-size: 2.2rem;
+    font-weight: 900;
+}
+.gold .lb-rank { background: #ffca28; }
+.silver .lb-rank { background: #bdbdbd; }
+.bronze .lb-rank { background: #ff8a65; }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動機台大螢幕看板</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="tv-body">
+    <div class="tv-container">
+        <!-- 左側：最新挑戰動態 -->
+        <div class="tv-main">
+            <h1 class="yugong-title" style="font-size: 5rem; text-align: left; margin:0 0 20px 0;">⛰️ 愚公移山，等你來戰！</h1>
+            
+            <div id="tv-photo-box" style="display:none; text-align: center;">
+                <img id="tv-player-photo" class="tv-big-photo" src="" alt="Player Photo" />
+            </div>
+
+            <div id="tv-player-name" class="tv-highlight-name" style="text-align: center; margin-top:20px;">等待小神童連線...</div>
+            <div id="tv-status-msg" class="blink" style="font-size: 2rem; color: #555; text-align: center;">還沒有人排隊，快掃描 QR Code 加入！</div>
+            
+            <div id="tv-score-box" style="display:none; text-align: center;">
+                <div class="time-label" style="font-size:2rem; margin-top:10px;">最後成績</div>
+                <div id="tv-time" class="time-score" style="font-size: 10rem;">0.00</div>
+                <div id="tv-rank" class="rank-tag cute" style="font-size: 4rem;">分析中</div>
+            </div>
+            
+            <div style="margin-top: auto; padding-top: 40px; text-align: center;">
+                <p style="color:var(--primary); font-size:2rem; font-weight:900;">📱 掃描旁邊的 QR Code，拍下大頭照來挑戰！</p>
+                <p style="color:var(--text-muted);font-size:1.5rem; font-weight:bold;">看看誰手速最快，成為最強「移山神童」！</p>
+            </div>
+        </div>
+
+        <!-- 右側：排行榜 -->
+        <div class="tv-sidebar">
+            <h2 style="color:var(--secondary); font-size:3rem; text-align:center; font-weight:900; margin-top:0;">🏆 移山英雄榜</h2>
+            <div id="leaderboard-list" class="leaderboard-list">
+                <div style="text-align:center; color:#888; margin-top: 50px; font-size: 1.5rem; font-weight:bold;">等你來創造歷史...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="tv.js"></script>
+</body>
+</html>
